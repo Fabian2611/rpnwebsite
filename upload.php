@@ -24,7 +24,36 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             }
         }
     } else {
-        $message = "Error: No file uploaded or upload error.";
+        if (isset($_FILES["song"]) && $_FILES["song"]["error"] !== UPLOAD_ERR_OK) {
+            switch ($_FILES["song"]["error"]) {
+                case UPLOAD_ERR_INI_SIZE:
+                    $message = "Error: File exceeds upload_max_filesize in php.ini";
+                    break;
+                case UPLOAD_ERR_FORM_SIZE:
+                    $message = "Error: File exceeds MAX_FILE_SIZE directive";
+                    break;
+                case UPLOAD_ERR_PARTIAL:
+                    $message = "Error: File was only partially uploaded";
+                    break;
+                case UPLOAD_ERR_NO_FILE:
+                    $message = "Error: No file was uploaded";
+                    break;
+                case UPLOAD_ERR_NO_TMP_DIR:
+                    $message = "Error: Missing a temporary folder";
+                    break;
+                case UPLOAD_ERR_CANT_WRITE:
+                    $message = "Error: Failed to write file to disk";
+                    break;
+                case UPLOAD_ERR_EXTENSION:
+                    $message = "Error: A PHP extension stopped the file upload";
+                    break;
+                default:
+                    $message = "Error: Unknown upload error";
+                    break;
+            }
+        } else {
+            $message = "Error: No file uploaded or request too large for PHP post_max_size.";
+        }
     }
 }
 ?>
