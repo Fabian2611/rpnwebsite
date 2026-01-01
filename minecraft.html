@@ -89,7 +89,7 @@
             <h3 id="vorbereitung">Vorbereitung</h3>
             <ol>
                 <li>Du musst ein Microsoft Konto besitzen, auf dem du die <em>Minecraft: Java Edition</em> oder <em>Minecraft: Java & Bedrock Edition für PC</em> besitzt.</li>
-                <li>Dein Computer oder Laptop sollte mit mindestens 8 GB Arbeitsspeicher ausgestattet sein.</li>
+                <li>Dein Computer oder Laptop sollte mit mindestens 12 GB Arbeitsspeicher ausgestattet sein.</li>
             </ol>
 
             <h3 id="curseforge">1. CurseForge</h3>
@@ -115,6 +115,40 @@
                 <li>Importiere es in deinen Launcher. Dein Modloader sollte <a href="https://mvnrepository.com/artifact/net.neoforged/forge/1.20.1-47.1.106" target="_blank">NeoForge 47.1.106</a> sein.</li>
                 <li>Starte das Modpack und betrete den Server mit der IP <code>roleplaynet.de</code>, oder drücke einfach den <i>Join RPN</i> Knopf.</li>
             </ol>
+
+
+            <h2 id="performance">Performance</h2>
+            <p>Da das Modpack über 100 Mods enthält, kann es zu schlechten Framerates oder hohem RAM-Verbrauch kommen.
+            Damit du auch auf etwas schwächeren Geräten spielen kannst, gibt es ein paar Möglichkeiten, um eine bessere Performance zu bekommen</p>
+
+            <h3 id="ram">1. RAM-Zuweisung</h3>
+            <p>Deinem Launcher müssen mindestens 8 GB, aber besser 10 GB Arbeitsspeicher zugewiesen sein. Suche dafür nach Optionen wie
+            <i>Maximum Memory Allocation</i> oder ähnlichem, die du auf 8'000 MB bis 10'000 MB setzt. <br/>
+            Solltest du diese nicht finden, kannst du auch den JVM-Parameter <code>-Xmx8G</code> oder <code>-Xmx10G</code> verwenden.
+            Wenn du das Modpack direkt von CurseForge oder Modrinth heruntergeladen hast, ist das schon eingestellt.</p>
+
+            <h3 id="jvm-args">2. JVM-Parameter</h3>
+            <p>Der JVM können im Launcher verschiedene Parameter (<i>JVM arguments</i> oder <i>Java arguments</i>) zugewiesen werden.
+                Wenn du eines der folgenden Betriebssysteme benutzt:</p>
+            <ul>
+                <li>Windows 10/11</li>
+                <li>Ubuntu</li>
+                <li>Linux Mint Cinnamon</li>
+                <li>Debian GNU/Linux</li>
+                <li>macOS 15 Sequoia</li>
+                <li>macOS 26 Tahoe</li>
+            </ul>
+            <p>dann kannst du die folgenden JVM-Parameter verwenden, um die Performance zu verbessern:</p>
+            <pre>
+-XX:+UseG1GC
+-XX:MaxGCPauseMillis=50
+-XX:G1ReservePercent=15
+-XX:InitiatingHeapOccupancyPercent=15
+-XX:G1HeapRegionSize=16M
+-XX:+ParallelRefProcEnabled
+-XX:+DisableExplicitGC
+            </pre>
+            <p>Diese funktionieren zwar nicht immer, sollten aber auf den meisten Plattformen die Performance erheblich verbessern.</p>
         </article>
     </main>
 
