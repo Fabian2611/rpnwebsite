@@ -43,7 +43,7 @@ const footerHTML = `
             <svg viewBox="0 0 24 24" width="24" height="24"><path fill="currentColor" d="M20 4H4c-1.1 0-1.99.9-1.99 2L2 18c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 4l-8 5l-8-5V6l8 5l8-5v2z"/></svg>
         </a>
     </div>
-    <div class="copyright">© 2025 Roleplay.net</div>
+    <div class="copyright">© 2026 Roleplay.net</div>
     <div class="copyright"><a class="inconspicuous" href="static/media/tos.txt">Nutzungsbedingungen</a> | <a class="inconspicuous" href="static/media/privacy.txt">Privatsphäre</a> | <a class="inconspicuous" href="static/media/contact.txt">Impressum</a></div>
 </footer>
 `;
