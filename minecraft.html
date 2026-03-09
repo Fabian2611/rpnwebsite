@@ -132,7 +132,7 @@
                 Wenn du eins der folgenden Betriebssysteme benutzt:</p>
             <ul>
                 <li>Windows 10/11</li>
-                <li>Ubuntu</li>
+                <li>Ubuntu (GNOME oder KDE)</li>
                 <li>Linux Mint Cinnamon</li>
                 <li>Debian GNU/Linux</li>
                 <li>macOS 15 Sequoia</li>
@@ -147,6 +147,8 @@
 -XX:G1HeapRegionSize=16M
 -XX:+ParallelRefProcEnabled
 -XX:+DisableExplicitGC
+-Dorg.cef.disable_gpu=true
+-Dorg.cef.disable_gpu_compositing=true
             </pre>
             <p>Diese funktionieren zwar nicht immer, sollten aber auf den meisten Plattformen die Performance erheblich verbessern.</p>
         </article>
