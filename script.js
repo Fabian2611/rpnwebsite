@@ -1,15 +1,16 @@
 const navbarHTML = `
 <nav class="navbar">
     <div class="nav-container">
-        <a href="index.html" class="nav-brand">
-            <img src="static/media/rpnfull.png" alt="Roleplay.net" class="nav-logo">
+        <a href="/index.html" class="nav-brand">
+            <img src="/static/media/rpnfull.png" alt="Roleplay.net" class="nav-logo">
         </a>
         <div class="nav-right">
             <ul class="nav-menu">
-                <li><a href="index.html">Startseite</a></li>
-                <li><a href="general.html">Übersicht</a></li>
-                <li><a href="minecraft.html">Minecraft</a></li>
-                <li><a href="fivem.html">FiveM</a></li>
+                <li><a href="/index.html">Startseite</a></li>
+                <li><a href="/general.html">Übersicht</a></li>
+                <li><a href="/minecraft.html">Minecraft</a></li>
+                <li><a href="/fivem.html">FiveM</a></li>
+                <li><a href="/wiki/index.html">Wiki</a></li>
             </ul>
             <button id="theme-toggle" class="theme-toggle" aria-label="Toggle dark mode">
                 <svg class="sun-icon" viewBox="0 0 24 24" width="20" height="20">
@@ -89,6 +90,70 @@ function initThemeToggle() {
     }
 }
 
+// Static map of the wiki's folder structure. Each section lists any
+// subfolders (like "mods") and the pages inside them. Add new pages here
+// as they're created - the sidebar tree on the section's index page will
+// pick them up automatically.
+const wikiStructure = {
+    minecraft: {
+        title: 'Minecraft',
+        url: '/wiki/minecraft/index.html',
+        folders: {
+            mods: {
+                title: 'Mods',
+                pages: [
+                    { title: "Lightman's Currency", url: '/wiki/minecraft/mods/lightmans-currency.html' },
+                ]
+            }
+        }
+    }
+};
+
+function buildWikiTree(listEl, sectionKey) {
+    const section = wikiStructure[sectionKey];
+    if (!section) return;
+
+    const currentPath = window.location.pathname;
+    listEl.innerHTML = '';
+
+    Object.values(section.folders || {}).forEach(folder => {
+        const folderContainsCurrent = folder.pages.some(page => page.url === currentPath);
+
+        const li = document.createElement('li');
+        li.className = 'wiki-tree-folder';
+
+        const details = document.createElement('details');
+        details.open = folderContainsCurrent;
+
+        const summary = document.createElement('summary');
+        summary.textContent = folder.title;
+        details.appendChild(summary);
+
+        const innerUl = document.createElement('ul');
+        folder.pages.forEach(page => {
+            const pageLi = document.createElement('li');
+            const a = document.createElement('a');
+            a.href = page.url;
+            a.textContent = page.title;
+            if (currentPath === page.url) a.classList.add('active');
+            pageLi.appendChild(a);
+            innerUl.appendChild(pageLi);
+        });
+
+        details.appendChild(innerUl);
+        li.appendChild(details);
+        listEl.appendChild(li);
+    });
+}
+
+function initWikiTree() {
+    const wrapper = document.getElementById('wiki-tree');
+    const listEl = document.getElementById('wiki-tree-list');
+    if (!wrapper || !listEl) return;
+
+    buildWikiTree(listEl, wrapper.dataset.section);
+}
+
 function generateToC() {
     const outlineContainer = document.querySelector('.outline ul');
     const contentHeaders = document.querySelectorAll('.content h1, .content h2, .content h3');
@@ -138,8 +203,37 @@ function initSmoothScroll() {
     });
 }
 
+const ITEM_TEXTURE_BASE = '/static/items/';
+
+function resolveItemTexture(id) {
+    if (id.startsWith('/') || id.startsWith('http://') || id.startsWith('https://')) {
+        return id;
+    }
+    return `${ITEM_TEXTURE_BASE}${id}.png`;
+}
+
+function initItemChips() {
+    document.querySelectorAll('[data-item]').forEach(el => {
+        if (el.dataset.itemInit) return; // already processed
+
+        const img = document.createElement('img');
+        img.src = resolveItemTexture(el.dataset.item);
+        img.alt = '';
+        img.loading = 'lazy';
+        img.onerror = function() {
+            this.style.display = 'none';
+        };
+
+        el.classList.add('item-chip');
+        el.insertBefore(img, el.firstChild);
+        el.dataset.itemInit = 'true';
+    });
+}
+
 document.addEventListener('DOMContentLoaded', function() {
     injectLayout();
     generateToC();
+    initWikiTree();
+    initItemChips();
     initSmoothScroll();
 });

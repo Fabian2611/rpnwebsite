@@ -243,6 +243,72 @@ body {
     opacity: 0.7;
 }
 
+/* Page Header (used by hub-style pages like /wiki) */
+.page-header {
+    max-width: 1600px;
+    margin: 0 auto;
+    padding: 3rem 2rem 0.5rem;
+    text-align: center;
+}
+
+.page-header h1 {
+    font-size: 2.75rem;
+    color: var(--primary-color);
+    margin-bottom: 0.5rem;
+}
+
+.page-header p {
+    color: var(--text-muted);
+    font-size: 1.15rem;
+}
+
+/* Breadcrumbs */
+.breadcrumbs {
+    max-width: 1600px;
+    margin: 1.5rem auto 0;
+    padding: 0 2rem;
+    font-size: 0.85rem;
+    color: var(--text-muted);
+}
+
+.breadcrumbs a {
+    color: var(--text-muted);
+    text-decoration: none;
+}
+
+.breadcrumbs a:hover {
+    color: var(--primary-color);
+    text-decoration: underline;
+}
+
+.breadcrumbs span {
+    margin: 0 0.4rem;
+}
+
+/* "Coming soon" badge, e.g. for wiki sections that don't exist yet */
+.badge {
+    display: inline-block;
+    font-size: 0.65rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.03em;
+    background: var(--border-color);
+    color: var(--text-muted);
+    padding: 0.2rem 0.5rem;
+    border-radius: 999px;
+    margin-left: 0.5rem;
+    vertical-align: middle;
+}
+
+.feature-card--soon {
+    opacity: 0.7;
+}
+
+.feature-card--soon:hover {
+    transform: none;
+    box-shadow: none;
+}
+
 /* Content Pages */
 .content-page {
     max-width: 1600px;
@@ -258,13 +324,30 @@ body {
     flex-shrink: 0;
 }
 
-.outline {
+/* Wraps the outline + wiki tree so both scroll together as one sticky unit */
+.sidebar-sticky {
     position: sticky;
     top: 80px;
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+}
+
+.outline {
     background: var(--bg-color);
     border: 1px solid var(--border-color);
     border-radius: 8px;
     padding: 1.5rem;
+}
+
+/* Standalone outline (no sidebar-sticky wrapper) keeps its own sticky behavior */
+.sidebar > .outline {
+    position: sticky;
+    top: 80px;
+}
+
+.sidebar-sticky > .outline {
+    position: static;
 }
 
 .outline h4 {
@@ -288,6 +371,76 @@ body {
 }
 
 .outline a:hover {
+    color: var(--primary-color);
+}
+
+/* Wiki content tree - collapsible folder/page nav shown on section index pages */
+.wiki-tree {
+    background: var(--bg-color);
+    border: 1px solid var(--border-color);
+    border-radius: 8px;
+    padding: 1.5rem;
+}
+
+.wiki-tree h4 {
+    margin-bottom: 1rem;
+    color: var(--primary-color);
+}
+
+.wiki-tree ul {
+    list-style: none;
+}
+
+.wiki-tree-folder {
+    margin-bottom: 0.25rem;
+}
+
+.wiki-tree-folder summary {
+    cursor: pointer;
+    font-weight: 500;
+    font-size: 0.9rem;
+    color: var(--text-color);
+    padding: 0.25rem 0;
+    display: flex;
+    align-items: center;
+    list-style: none;
+}
+
+.wiki-tree-folder summary::-webkit-details-marker {
+    display: none;
+}
+
+.wiki-tree-folder summary::before {
+    content: '▶';
+    display: inline-block;
+    font-size: 0.6rem;
+    margin-right: 0.5rem;
+    color: var(--text-muted);
+    transition: transform 0.2s;
+}
+
+.wiki-tree-folder details[open] summary::before {
+    transform: rotate(90deg);
+}
+
+.wiki-tree-folder ul {
+    padding-left: 1.25rem;
+    margin-top: 0.35rem;
+}
+
+.wiki-tree-folder li {
+    margin-bottom: 0.35rem;
+}
+
+.wiki-tree a {
+    text-decoration: none;
+    color: var(--text-color);
+    font-size: 0.85rem;
+    transition: color 0.3s;
+}
+
+.wiki-tree a:hover,
+.wiki-tree a.active {
     color: var(--primary-color);
 }
 
@@ -348,6 +501,23 @@ body {
     border-radius: 3px;
     font-family: 'Courier New', monospace;
     font-size: 0.9em;
+}
+
+/* Item texture chip - drop-in element, see initItemChips() in script.js */
+.item-chip {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.25rem;
+    vertical-align: center;
+    line-height: 1;
+    text-decoration: dotted underline var(--primary-color);
+}
+
+.item-chip img {
+    width: 20px;
+    height: 20px;
+    image-rendering: pixelated;
+    flex-shrink: 0;
 }
 
 /* Tables */
